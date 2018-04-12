@@ -30,7 +30,8 @@
   <!-- Driver nodelet -->
   <node pkg="nodelet" type="nodelet" name="driver"
         args="load astra_camera/AstraDriverNodelet $(arg manager)"
-	    respawn="$(arg respawn)">
+        required="true"
+        respawn="$(arg respawn)">
     <param name="device_id" type="str" value="$(arg device_id)" />
     <param name="bootorder" type="int" value="$(arg bootorder)" />
     <param name="devnums" type="int" value="$(arg devnums)" />
