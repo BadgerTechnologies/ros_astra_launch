@@ -41,6 +41,8 @@
        supplying a more accurate tf tree from calibration. -->
   <arg name="load_driver" default="true" />
   <arg name="publish_tf" default="true" />
+  <!-- Optionally allows for an external manager to be used, skipping loading the internal one -->
+  <arg name="external_manager" default="false" />
   <!-- Processing Modules -->
   <arg name="rgb_processing"                  default="false"  />
   <arg name="debayer_processing"              default="false" />
@@ -57,6 +59,9 @@
   <!-- Disable bond topics by default -->
   <arg name="respawn" default="false" />
 
+  <!-- Make nodelet driver required=true by default -->
+  <arg name="required" default="true" />
+
   <!-- Worker threads for the nodelet manager -->
   <arg name="num_worker_threads" default="4" />
 
@@ -67,7 +72,7 @@
 
 	  <!-- Start nodelet manager -->
 	  <arg name="debug" default="false" /> <!-- Run manager in GDB? -->
-	  <include file="$(find rgbd_launch)/launch/includes/manager.launch.xml">
+	  <include unless="$(arg external_manager)" file="$(find rgbd_launch)/launch/includes/manager.launch.xml">
 	    <arg name="name" value="$(arg manager)" />
 	    <arg name="debug" value="$(arg debug)" />
 	    <arg name="num_worker_threads"  value="$(arg num_worker_threads)" />
@@ -88,6 +93,7 @@
       <arg name="ir"                              value="$(arg ir)" />
       <arg name="depth"                           value="$(arg depth)" />
       <arg name="respawn"                         value="$(arg respawn)" />
+      <arg name="required"                        value="$(arg required)" />
       <arg name="depth_registration"              value="$(arg depth_registration)" />
       <arg name="color_depth_synchronization"     value="$(arg color_depth_synchronization)" />
       <arg name="auto_exposure"                   value="$(arg auto_exposure)" />
