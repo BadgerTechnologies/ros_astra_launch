@@ -51,6 +51,7 @@
     <remap from="depth" to="$(arg depth)" />
     <remap from="depth_registered" to="$(arg depth_registered)" />
 
+    <remap from="$(arg ir)/image" to="$(arg ir)/image_raw" />
     <remap from="$(arg rgb)/image" to="$(arg rgb)/image_raw" />
     <remap from="$(arg depth)/image" to="$(arg depth_registered)/image_raw" />
   </node>
