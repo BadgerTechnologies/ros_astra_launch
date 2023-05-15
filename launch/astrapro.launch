@@ -1,6 +1,8 @@
 <!-- Entry point for using OpenNI2 devices -->
 <launch>
 
+  <arg name="use_orbbec_sdk" default="false" />
+
   <!-- "camera" should uniquely identify the device. All topics are pushed down
        into the "camera" namespace, and it is prepended to tf frame ids. -->
   <arg name="camera" default="camera" />
@@ -13,6 +15,7 @@
          "2bc5/0401@1/6" : uri in format <vendor ID>/<product ID>@<bus number>/<device number>
          "15120410023"   : serial number -->
   <arg name="device_id" default="#1" />
+  <arg name="product_id" default="" />
   <arg name="bootorder" default="0" />
   <arg name="devnums" default="1" />
   <arg name="lockfile" default=""/>
@@ -78,8 +81,8 @@
 	    <arg name="num_worker_threads"  value="$(arg num_worker_threads)" />
 	  </include>
 
-    <!-- Load driver -->
-    <include if="$(arg load_driver)"
+    <!-- Load OpenNI driver (if not using Orbbec SDK) -->
+    <include if="$(eval arg('load_driver') and not arg('use_orbbec_sdk'))"
 	     file="$(find astra_launch)/launch/includes/device.launch.xml">
       <arg name="manager"                         value="$(arg manager)" />
       <arg name="device_id"                       value="$(arg device_id)" />
@@ -98,6 +101,25 @@
       <arg name="color_depth_synchronization"     value="$(arg color_depth_synchronization)" />
       <arg name="auto_exposure"                   value="$(arg auto_exposure)" />
       <arg name="auto_white_balance"              value="$(arg auto_white_balance)" />
+      <arg name="lockfile"                        value="$(arg lockfile)" />
+    </include>
+
+    <!-- Load Orbbec SDK for ROS driver -->
+    <include if="$(eval arg('load_driver') and arg('use_orbbec_sdk'))"
+	     file="$(find astra_launch)/launch/includes/orbbec-ros-sdk.launch.xml">
+      <arg name="manager"                         value="$(arg manager)" />
+      <arg name="camera_name"                     value="$(arg camera)" />
+      <arg name="serial_number"                   value="$(arg device_id)" />
+      <arg name="product_id"                      value="$(arg product_id)" />
+      <arg name="devnums"                         value="$(arg devnums)" />
+      <arg name="ir_info_uri"                     value="$(arg depth_camera_info_url)" />
+      <arg name="color_info_uri"                  value="$(arg rgb_camera_info_url)" />
+      <arg name="rgb"                             value="$(arg rgb)" />
+      <arg name="ir"                              value="$(arg ir)" />
+      <arg name="depth"                           value="$(arg depth)" />
+      <arg name="respawn"                         value="$(arg respawn)" />
+      <arg name="required"                        value="$(arg required)" />
+      <arg name="depth_registration"              value="$(arg depth_registration)" />
       <arg name="lockfile"                        value="$(arg lockfile)" />
     </include>
 

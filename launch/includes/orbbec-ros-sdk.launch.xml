@@ -1,0 +1,96 @@
+<!-- Launch the Orbbec SDK for ROS device driver -->
+<launch>
+
+  <!-- Name of nodelet manager, must be fully resolved -->
+  <arg name="manager" />
+
+  <!-- Camera Product IDs used at Badger. -->
+  <arg name="astra_mini_pro" default="65b" />
+
+  <!-- Driver parameters -->
+  <arg name="log_level" default="warn" />
+  <arg name="serial_number" default="" />
+  <arg name="product_id" default="$(arg astra_mini_pro)" />
+  <arg name="devnums" default="1" />
+  <arg name="publish_tf" default="false" />
+  <arg name="ir_info_uri" default="" />
+  <arg name="color_info_uri" default="" />
+  <arg name="lockfile" default="" />
+  <arg name="camera_name" default="camera" />
+
+  <arg name="enable_depth" default="true" />
+  <arg name="enable_rgb" default="true" />
+  <arg name="enable_ir" default="true" />
+  <arg name="depth_width" default="160" />
+  <arg name="depth_height" default="120" />
+  <arg name="depth_fps" default="30" />
+  <arg name="ir_width" default="1280" />
+  <arg name="ir_height" default="1024" />
+  <arg name="ir_fps" default="7" />
+  <arg name="rgb_width" default="640" />
+  <arg name="rgb_height" default="480" />
+  <arg name="rgb_fps" default="30" />
+  <arg name="depth_format" default="$(eval 'Y12' if arg('product_id') == arg('astra_mini_pro') else 'Y16')" />
+  <arg name="ir_format" default="Y10" />
+  <arg name="rgb_format" default="RGB" />
+
+  <arg name="depth_registration" default="false" />
+  <arg name="enable_d2c_viewer" default="false"/>
+  <arg name="enable_pipeline" default="false"/>
+  <arg name="enable_point_cloud" default="false"/>
+  <arg name="enable_colored_point_cloud" default="false"/>
+  <arg name="connection_delay" default="100"/>
+
+  <arg name="respawn" default="false" />
+  <arg name="required" default="true" />
+
+  <!-- Remapping arguments -->
+  <arg name="rgb"              default="rgb" />
+  <arg name="ir"               default="ir" />
+  <arg name="depth"            default="depth" />
+  <arg name="depth_registered" default="depth_registered" />
+
+  <!-- Driver nodelet -->
+  <node pkg="nodelet" type="nodelet" name="driver"
+        args="load orbbec_camera/OrbbecCameraNodelet $(arg manager)"
+        required="$(arg required)" respawn="$(arg respawn)">
+    <param name="camera_name" type="str" value="$(arg camera_name)" />
+    <param name="publish_tf" type="bool" value="$(arg publish_tf)" />
+    <param name="serial_number" type="str" value="$(arg serial_number)" />
+    <param name="log_level" type="str" value="$(arg log_level)" />
+    <param name="devnums" type="int" value="$(arg devnums)" />
+    <param name="lockfile" type="str" value="$(arg lockfile)" />
+    <param name="color_info_uri"   value="$(arg color_info_uri)" />
+    <param name="ir_info_uri" value="$(arg ir_info_uri)" />
+
+    <param name="depth_registration" value="$(arg depth_registration)" />
+    <param name="enable_d2c_viewer" value="$(arg enable_d2c_viewer)"/>
+    <param name="enable_pipeline" value="$(arg enable_pipeline)"/>
+    <param name="enable_point_cloud" value="$(arg enable_point_cloud)"/>
+    <param name="enable_colored_point_cloud" value="$(arg enable_colored_point_cloud)"/>
+    <param name="connection_delay" value="$(arg connection_delay)"/>
+
+    <param name="enable_depth" value="$(arg enable_depth)" />
+    <param name="enable_ir" value="$(arg enable_ir)" />
+    <param name="enable_rgb" value="$(arg enable_rgb)" />
+    <param name="depth_width" value="$(arg depth_width)" />
+    <param name="depth_height" value="$(arg depth_height)" />
+    <param name="depth_fps" value="$(arg depth_fps)" />
+    <param name="depth_format" value="$(arg depth_format)" />
+    <param name="ir_width" value="$(arg ir_width)" />
+    <param name="ir_height" value="$(arg ir_height)" />
+    <param name="ir_fps" value="$(arg ir_fps)" />
+    <param name="ir_format" value="$(arg ir_format)" />
+    <param name="rgb_width" value="$(arg rgb_width)" />
+    <param name="rgb_height" value="$(arg rgb_height)" />
+    <param name="rgb_fps" value="$(arg rgb_fps)" />
+    <param name="rgb_format" value="$(arg rgb_format)" />
+
+    <remap from="ir" to="$(arg ir)" />
+    <remap from="rgb" to="$(arg rgb)" />
+    <remap from="depth" to="$(arg depth)" />
+    <remap from="depth_registered" to="$(arg depth_registered)" />
+
+  </node>
+
+</launch>
