@@ -21,12 +21,12 @@
   <arg name="enable_depth" default="true" />
   <arg name="enable_rgb" default="true" />
   <arg name="enable_ir" default="true" />
-  <arg name="depth_width" default="160" />
-  <arg name="depth_height" default="120" />
+  <arg name="depth_width" default="$(eval 160 if arg('product_id') == arg('astra_mini_pro') else 320)" />
+  <arg name="depth_height" default="$(eval 120 if arg('product_id') == arg('astra_mini_pro') else 200)" />
   <arg name="depth_fps" default="30" />
   <arg name="ir_width" default="1280" />
   <arg name="ir_height" default="1024" />
-  <arg name="ir_fps" default="7" />
+  <arg name="ir_fps" default="$(eval 7 if arg('product_id') == arg('astra_mini_pro') else 5)" />
   <arg name="rgb_width" default="640" />
   <arg name="rgb_height" default="480" />
   <arg name="rgb_fps" default="30" />
