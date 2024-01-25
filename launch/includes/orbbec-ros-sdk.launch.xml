@@ -52,7 +52,7 @@
 
   <!-- Driver nodelet -->
   <node pkg="nodelet" type="nodelet" name="driver"
-        args="load orbbec_camera/OrbbecCameraNodelet $(arg manager)"
+        args="load orbbec_camera/OBCameraNodelet $(arg manager)"
         required="$(arg required)" respawn="$(arg respawn)">
     <param name="camera_name" type="str" value="$(arg camera_name)" />
     <param name="publish_tf" type="bool" value="$(arg publish_tf)" />
