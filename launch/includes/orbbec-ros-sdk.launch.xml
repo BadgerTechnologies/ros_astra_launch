@@ -36,7 +36,7 @@
 
   <arg name="depth_registration" default="false" />
   <arg name="enable_d2c_viewer" default="false"/>
-  <arg name="enable_pipeline" default="false"/>
+  <arg name="enable_pipeline" default="true"/>
   <arg name="enable_point_cloud" default="false"/>
   <arg name="enable_colored_point_cloud" default="false"/>
   <arg name="connection_delay" default="100"/>
