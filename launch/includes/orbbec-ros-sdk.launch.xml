@@ -6,11 +6,12 @@
 
   <!-- Camera Product IDs used at Badger. -->
   <arg name="astra_mini_pro" default="65b" />
+  <arg name="gemini2" default="670" />
 
   <!-- Driver parameters -->
   <arg name="log_level" default="warn" />
   <arg name="serial_number" default="" />
-  <arg name="product_id" default="$(arg astra_mini_pro)" />
+  <arg name="product_id" default="" />
   <arg name="devnums" default="1" />
   <arg name="publish_tf" default="false" />
   <arg name="ir_info_uri" default="" />
@@ -21,17 +22,17 @@
   <arg name="enable_depth" default="true" />
   <arg name="enable_rgb" default="true" />
   <arg name="enable_ir" default="true" />
-  <arg name="depth_width" default="$(eval 160 if arg('product_id') == arg('astra_mini_pro') else 320)" />
-  <arg name="depth_height" default="$(eval 120 if arg('product_id') == arg('astra_mini_pro') else 200)" />
+  <arg name="depth_width" default="$(eval 160 if product_id == astra_mini_pro else 320)" />
+  <arg name="depth_height" default="$(eval 120 if product_id == astra_mini_pro else 200)" />
   <arg name="depth_fps" default="30" />
   <arg name="ir_width" default="1280" />
-  <arg name="ir_height" default="1024" />
-  <arg name="ir_fps" default="$(eval 7 if arg('product_id') == arg('astra_mini_pro') else 5)" />
+  <arg name="ir_height" default="$(eval 800 if product_id == gemini2 else 1024)" />
+  <arg name="ir_fps" default="$(eval 7 if product_id == astra_mini_pro else 30 if product_id == gemini2 else 5)" />
   <arg name="rgb_width" default="640" />
   <arg name="rgb_height" default="480" />
   <arg name="rgb_fps" default="30" />
-  <arg name="depth_format" default="$(eval 'Y12' if arg('product_id') == arg('astra_mini_pro') else 'Y16')" />
-  <arg name="ir_format" default="Y10" />
+  <arg name="depth_format" default="$(eval 'Y12' if product_id == astra_mini_pro else 'Y14' if product_id == gemini2 else 'Y16')" />
+  <arg name="ir_format" default="$(eval 'Y8' if product_id == gemini2 else 'Y10')" />
   <arg name="rgb_format" default="RGB" />
 
   <arg name="depth_registration" default="false" />
