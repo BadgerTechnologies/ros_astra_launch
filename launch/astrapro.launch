@@ -2,6 +2,8 @@
 <launch>
 
   <arg name="use_orbbec_sdk" default="false" />
+  <arg name="astra_mini_pro" default="65b" />
+  <arg name="gemini2" default="670" />
 
   <!-- "camera" should uniquely identify the device. All topics are pushed down
        into the "camera" namespace, and it is prepended to tf frame ids. -->
@@ -104,8 +106,8 @@
       <arg name="lockfile"                        value="$(arg lockfile)" />
     </include>
 
-    <!-- Load Orbbec SDK for ROS driver -->
-    <include if="$(eval arg('load_driver') and arg('use_orbbec_sdk'))"
+    <!-- Load Orbbec SDK for Astra Mini Pro -->
+    <include if="$(eval arg('load_driver') and arg('use_orbbec_sdk') and arg('product_id') == arg('astra_mini_pro'))"
 	     file="$(find astra_launch)/launch/includes/orbbec-ros-sdk.launch.xml">
       <arg name="manager"                         value="$(arg manager)" />
       <arg name="camera_name"                     value="$(arg camera)" />
@@ -121,7 +123,40 @@
       <arg name="required"                        value="$(arg required)" />
       <arg name="depth_registration"              value="$(arg depth_registration)" />
       <arg name="lockfile"                        value="$(arg lockfile)" />
+
+      <arg name="ir_fps"                          value="7" />
+
+      <arg name="depth_width"                     value="160" />
+      <arg name="depth_height"                    value="120" />
+      <arg name="depth_format"                    value="Y12" />
     </include>
+
+    <!-- Load Orbbec SDK for Gemini 2 -->
+    <include if="$(eval arg('load_driver') and arg('use_orbbec_sdk') and arg('product_id') == arg('gemini2'))"
+             file="$(find astra_launch)/launch/includes/orbbec-ros-sdk.launch.xml">
+      <arg name="manager"                         value="$(arg manager)" />
+      <arg name="camera_name"                     value="$(arg camera)" />
+      <arg name="serial_number"                   value="$(arg device_id)" />
+      <arg name="product_id"                      value="$(arg product_id)" />
+      <arg name="devnums"                         value="$(arg devnums)" />
+      <arg name="ir_info_uri"                     value="$(arg depth_camera_info_url)" />
+      <arg name="color_info_uri"                  value="$(arg rgb_camera_info_url)" />
+      <arg name="rgb"                             value="$(arg rgb)" />
+      <arg name="ir"                              value="$(arg ir)" />
+      <arg name="depth"                           value="$(arg depth)" />
+      <arg name="respawn"                         value="$(arg respawn)" />
+      <arg name="required"                        value="$(arg required)" />
+      <arg name="depth_registration"              value="$(arg depth_registration)" />
+      <arg name="lockfile"                        value="$(arg lockfile)" />
+
+      <arg name="ir_width"                        value="1280" />
+      <arg name="ir_height"                       value="800" />
+      <arg name="ir_fps"                          value="30" />
+      <arg name="ir_format"                       value="Y8" />
+
+      <arg name="depth_format"                    value="Y14" />
+    </include>
+
 
     <!-- Load standard constellation of processing nodelets -->
     <include file="$(find rgbd_launch)/launch/includes/processing.launch.xml">
