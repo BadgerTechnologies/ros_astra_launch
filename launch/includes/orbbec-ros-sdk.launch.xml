@@ -36,7 +36,7 @@
   <arg name="rgb_width" default="640" />
   <arg name="rgb_height" default="480" />
   <arg name="rgb_fps" default="30" />
-  <arg name="rgb_format" default="${eval 'YUYV' if product_id == gemini2 else 'RGB'}" />
+  <arg name="rgb_format" default="$(eval 'YUYV' if product_id == gemini2 else 'RGB')" />
 
   <arg name="depth_registration" default="false" />
   <arg name="enable_d2c_viewer" default="false"/>
