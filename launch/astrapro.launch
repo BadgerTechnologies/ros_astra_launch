@@ -20,6 +20,9 @@
   <arg name="devnums" default="1" />
   <arg name="lockfile" default=""/>
 
+  <arg name="minipro" default="65b"/>
+  <arg name="gemini2" default="670"/>
+
   <!-- By default, calibrations are stored to file://${ROS_HOME}/camera_info/${NAME}.yaml,
        where ${NAME} is of the form "[rgb|depth]_[serial#]", e.g. "depth_B00367707227042B".
        See camera_info_manager docs for calibration URL details. -->
@@ -105,12 +108,29 @@
     </include>
 
     <!-- Load Orbbec SDK for ROS driver -->
-    <include if="$(eval arg('load_driver') and arg('use_orbbec_sdk'))"
-	     file="$(find astra_launch)/launch/includes/orbbec-ros-sdk.launch.xml">
+    <include if="$(eval arg('load_driver') and arg('use_orbbec_sdk') and arg('product_id') == arg('minipro'))"
+	     file="$(find astra_launch)/launch/includes/minipro.launch.xml">
       <arg name="manager"                         value="$(arg manager)" />
       <arg name="camera_name"                     value="$(arg camera)" />
       <arg name="serial_number"                   value="$(arg device_id)" />
-      <arg name="product_id"                      value="$(arg product_id)" />
+      <arg name="devnums"                         value="$(arg devnums)" />
+      <arg name="ir_info_uri"                     value="$(arg depth_camera_info_url)" />
+      <arg name="color_info_uri"                  value="$(arg rgb_camera_info_url)" />
+      <arg name="rgb"                             value="$(arg rgb)" />
+      <arg name="ir"                              value="$(arg ir)" />
+      <arg name="depth"                           value="$(arg depth)" />
+      <arg name="respawn"                         value="$(arg respawn)" />
+      <arg name="required"                        value="$(arg required)" />
+      <arg name="depth_registration"              value="$(arg depth_registration)" />
+      <arg name="lockfile"                        value="$(arg lockfile)" />
+    </include>
+
+    <!-- Load Orbbec SDK for ROS driver -->
+    <include if="$(eval arg('load_driver') and arg('use_orbbec_sdk') and arg('product_id') == arg('gemini2'))"
+             file="$(find astra_launch)/launch/includes/gemini2.launch.xml">
+      <arg name="manager"                         value="$(arg manager)" />
+      <arg name="camera_name"                     value="$(arg camera)" />
+      <arg name="serial_number"                   value="$(arg device_id)" />
       <arg name="devnums"                         value="$(arg devnums)" />
       <arg name="ir_info_uri"                     value="$(arg depth_camera_info_url)" />
       <arg name="color_info_uri"                  value="$(arg rgb_camera_info_url)" />
