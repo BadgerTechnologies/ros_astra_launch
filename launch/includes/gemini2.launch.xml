@@ -40,27 +40,33 @@
 
   <!-- Noise Removal Filter -->
   <arg name="enable_noise_removal_filter" default="true"/>
-  <arg name="noise_removal_filter_min_diff" default="240"/>
+  <arg name="noise_removal_filter_min_diff" default="$(eval optparam(arg('camera_name') + '/driver/noise_removal_filter_min_diff', 240))"/>
   <arg name="noise_removal_filter_max_size" default="20"/>
 
   <!-- Temporal Filter -->
-  <arg name="enable_temporal_filter" default="true"/>
+  <arg name="enable_temporal_filter" default="$(eval optparam(arg('camera_name') + '/driver/enable_temporal_filter', 'true'))"/>
   <arg name="temporal_filter_diff_threshold" default="0.1"/>
   <arg name="temporal_filter_weight" default="0.35"/>
 
   <!-- Spatial Filter -->
-  <arg name="enable_spatial_filter" default="true"/>
+  <arg name="enable_spatial_filter" default="$(eval optparam(arg('camera_name') + '/driver/enable_spatial_filter', 'true'))"/>
   <arg name="spatial_filter_alpha" default="0.5"/>
   <arg name="spatial_filter_diff_threshold" default="1"/>
   <arg name="spatial_filter_magnitude" default="2"/>
   <arg name="spatial_filter_radius" default="1"/>
 
+  <!-- Threshold Filter -->
+  <arg name="enable_threshold_filter" default="$(eval optparam(arg('camera_name') + '/driver/enable_threshold_filter', false))"/>
+  <arg name="threshold_filter_max" default="$(eval optparam(arg('camera_name') + '/driver/threshold_filter_max', -1))"/>
+  <arg name="threshold_filter_min" default="$(eval optparam(arg('camera_name') + '/driver/threshold_filter_min', -1))"/>
+
   <!-- IR Stream Settings -->
-  <arg name="enable_ir_auto_exposure" default="true"/>
+  <arg name="enable_ir_auto_exposure" default="$(eval optparam(arg('camera_name') + '/driver/enable_ir_auto_exposure', true))"/>
   <arg name="ir_width" default="1280" />
   <arg name="ir_height" default="800" />
   <arg name="ir_fps" default="30" />
   <arg name="ir_format" default="Y8" />
+  <arg name="ir_exposure" default="$(eval optparam(arg('camera_name') + '/driver/ir_exposure', -1))"/>
 
   <!-- RGB Stream Settings -->
   <arg name="rgb_width" default="640" />
@@ -127,6 +133,11 @@
     <param name="spatial_filter_magnitude" value="$(arg spatial_filter_magnitude)"/>
     <param name="spatial_filter_radius" value="$(arg spatial_filter_radius)"/>
 
+    <!-- Threshold Filter -->
+    <param name="enable_threshold_filter" value="$(arg enable_threshold_filter)"/>
+    <param name="threshold_filter_max" value="$(arg threshold_filter_max)"/>
+    <param name="threshold_filter_min" value="$(arg threshold_filter_min)"/>
+
     <!-- Depth Stream Settings-->
     <param name="depth_width" value="$(arg depth_width)" />
     <param name="depth_height" value="$(arg depth_height)" />
@@ -145,6 +156,7 @@
     <param name="ir_height" value="$(arg ir_height)" />
     <param name="ir_fps" value="$(arg ir_fps)" />
     <param name="ir_format" value="$(arg ir_format)" />
+    <param name="ir_exposure" value="$(arg ir_exposure)"/>
 
     <!-- RGB Stream Settings -->
     <param name="rgb_width" value="$(arg rgb_width)" />
@@ -156,7 +168,6 @@
     <remap from="rgb" to="$(arg rgb)" />
     <remap from="depth" to="$(arg depth)" />
     <remap from="depth_registered" to="$(arg depth_registered)" />
-
   </node>
 
 </launch>
