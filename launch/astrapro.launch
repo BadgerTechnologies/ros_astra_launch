@@ -23,6 +23,9 @@
   <arg name="minipro" default="65b"/>
   <arg name="gemini2" default="670"/>
 
+  <arg name="robot_shape" default =""/>
+  <arg name="wombat_model" default="wombat"/>
+
   <!-- By default, calibrations are stored to file://${ROS_HOME}/camera_info/${NAME}.yaml,
        where ${NAME} is of the form "[rgb|depth]_[serial#]", e.g. "depth_B00367707227042B".
        See camera_info_manager docs for calibration URL details. -->
@@ -126,8 +129,8 @@
       <arg name="lockfile"                        value="$(arg lockfile)" />
     </include>
 
-    <!-- Load Orbbec SDK for ROS driver -->
-    <include if="$(eval arg('load_driver') and arg('use_orbbec_sdk') and arg('product_id') == arg('gemini2'))"
+    <!-- Load Orbbec SDK for ROS driver, Otter/Legacy Settings -->
+    <include if="$(eval arg('load_driver') and arg('use_orbbec_sdk') and arg('product_id') == arg('gemini2') and arg('robot_shape') != arg('wombat_model'))"
              file="$(find astra_launch)/launch/includes/gemini2.launch.xml">
       <arg name="manager"                         value="$(arg manager)" />
       <arg name="camera_name"                     value="$(arg camera)" />
@@ -143,6 +146,33 @@
       <arg name="depth_registration"              value="$(arg depth_registration)" />
       <arg name="lockfile"                        value="$(arg lockfile)" />
       <arg name="depth_format"                    value="$(arg gemini2_depth_format)" />
+    </include>
+
+    <!-- Load Orbbec SDK for ROS driver, Wombat Settings -->
+    <include if="$(eval arg('load_driver') and arg('use_orbbec_sdk') and arg('product_id') == arg('gemini2') and arg('robot_shape') == arg('wombat_model'))"
+             file="$(find astra_launch)/launch/includes/gemini2.launch.xml">
+      <arg name="manager"                         value="$(arg manager)" />
+      <arg name="camera_name"                     value="$(arg camera)" />
+      <arg name="serial_number"                   value="$(arg device_id)" />
+      <arg name="devnums"                         value="$(arg devnums)" />
+      <arg name="ir_info_uri"                     value="$(arg depth_camera_info_url)" />
+      <arg name="color_info_uri"                  value="$(arg rgb_camera_info_url)" />
+      <arg name="rgb"                             value="$(arg rgb)" />
+      <arg name="ir"                              value="$(arg ir)" />
+      <arg name="depth"                           value="$(arg depth)" />
+      <arg name="respawn"                         value="$(arg respawn)" />
+      <arg name="required"                        value="$(arg required)" />
+      <arg name="depth_registration"              value="$(arg depth_registration)" />
+      <arg name="lockfile"                        value="$(arg lockfile)" />
+
+      <arg name="depth_work_mode"                 value="Obstacle Avoidance" />
+      <arg name="enable_spatial_filter"           value="false" />
+      <arg name="enable_temporal_filter"          value="false" />
+      <arg name="enable_threshold_filter"         value="true" />
+      <arg name="threshold_filter_min"            value="0" />
+      <arg name="threshold_filter_max"            value="4000" />
+      <arg name="enable_ir_auto_exposure"         value="false" />
+      <arg name="ir_exposure"                     value="4000" />
     </include>
 
     <!-- Load standard constellation of processing nodelets -->
