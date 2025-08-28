@@ -173,6 +173,7 @@
       <arg name="threshold_filter_max"            value="4000" />
       <arg name="enable_ir_auto_exposure"         value="false" />
       <arg name="ir_exposure"                     value="4000" />
+      <arg name="noise_removal_filter_max_size"   value="650" />
     </include>
 
     <!-- Load standard constellation of processing nodelets -->
