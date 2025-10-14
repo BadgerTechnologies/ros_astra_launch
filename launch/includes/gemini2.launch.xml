@@ -36,7 +36,7 @@
   <!-- Unbinned Sparse Default -->
   <!-- Binned Sparse Default -->
   <!-- Obstacle Avoidance -->
-  <arg name="depth_work_mode" default="Unbinned Dense Default"/>
+  <arg name="depth_work_mode" default="Obstacle Avoidance"/>
 
   <!-- Noise Removal Filter -->
   <arg name="enable_noise_removal_filter" default="true"/>
