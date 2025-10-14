@@ -40,8 +40,8 @@
 
   <!-- Noise Removal Filter -->
   <arg name="enable_noise_removal_filter" default="true"/>
-  <arg name="noise_removal_filter_min_diff" default="400"/>
-  <arg name="noise_removal_filter_max_size" default="240"/>
+  <arg name="noise_removal_filter_min_diff" default="240"/>
+  <arg name="noise_removal_filter_max_size" default="20"/>
 
   <!-- Temporal Filter -->
   <arg name="enable_temporal_filter" default="true"/>
