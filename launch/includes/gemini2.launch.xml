@@ -36,12 +36,12 @@
   <!-- Unbinned Sparse Default -->
   <!-- Binned Sparse Default -->
   <!-- Obstacle Avoidance -->
-  <arg name="depth_work_mode" default="Obstacle Avoidance"/>
+  <arg name="depth_work_mode" default="$(eval optparam(arg('camera_name') + '/driver/depth_work_mode', 'Unbinned Dense Default'))"/>
 
   <!-- Noise Removal Filter -->
   <arg name="enable_noise_removal_filter" default="true"/>
-  <arg name="noise_removal_filter_min_diff" default="$(eval optparam(arg('camera_name') + '/driver/noise_removal_filter_min_diff', 240))"/>
-  <arg name="noise_removal_filter_max_size" default="20"/>
+  <arg name="noise_removal_filter_min_diff" default="$(eval optparam(arg('camera_name') + '/driver/noise_removal_filter_min_diff', 400))"/>
+  <arg name="noise_removal_filter_max_size" default="$(eval optparam(arg('camera_name') + '/driver/noise_removal_filter_max_size', 240))"/>
 
   <!-- Temporal Filter -->
   <arg name="enable_temporal_filter" default="$(eval optparam(arg('camera_name') + '/driver/enable_temporal_filter', 'true'))"/>
