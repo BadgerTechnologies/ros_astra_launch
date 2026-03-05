@@ -39,7 +39,7 @@
   <arg name="depth_work_mode" default="Obstacle Avoidance"/>
 
   <!-- Noise Removal Filter -->
-  <arg name="enable_noise_removal_filter" default="true"/>
+  <arg name="enable_noise_removal_filter" default="false"/>
   <arg name="noise_removal_filter_min_diff" default="$(eval optparam(arg('camera_name') + '/driver/noise_removal_filter_min_diff', 240))"/>
   <arg name="noise_removal_filter_max_size" default="20"/>
 
